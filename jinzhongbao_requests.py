@@ -86,6 +86,7 @@ class Spider:
         return transaction_date_list
 
     def fetch_content(self):
+        # global response
         s = requests.session()
         s.headers.update({"User-Agent": self.User_Agent, 'Content-Type': self.Content_Type})
         requests.utils.add_dict_to_cookiejar(s.cookies, cookie_dict=self.cookies)
@@ -93,11 +94,20 @@ class Spider:
         data = {}
         for date in self.transaction_date_list:
             self.form_data['transactionDate'] = date
-            response = s.post(config.url4, data=self.form_data)
+            response = s.post(config.url4, data=self.form_data)   # 将参数放在字典中,当做参数传递
             data[date] = response.text
+            if response.status_code == 200:
+                print(date, '请求成功')
+            else:
+                print(date, '请求失败')
+
+        # params_url = config.url4 + '?' + config.requests_data   # 将参数放在 url 中,只是介绍查询参数的请求方式，这里就不循环查了
+        # response = s.post(params_url)
 
         with open('data.py', 'w') as f:  # 将抓取的数据写入文件保存
             f.write(str(data))
+
+        print('爬取的数据已写入 data.py 文件')
 
     def analysis(self):
         with open('data.py', 'r') as f:
@@ -131,6 +141,8 @@ class Spider:
             for column in range(0, len(self.data[row])):
                 sheet1.write(base_rows + row, column, self.data[row][column], self.set_style('Times New Roman', 220, True))
         write_book.save('trading_record.xls')
+
+        print('成功写入 excel')
 
     def go(self):
         self.fetch_content()    # 抓取文件，数据写入文件
