@@ -12,6 +12,7 @@ import requests
 import xlwt
 from http.cookies import SimpleCookie
 
+from bs4 import BeautifulSoup
 from xlrd import open_workbook
 from xlutils.copy import copy
 
@@ -85,29 +86,47 @@ class Spider:
 
         return transaction_date_list
 
-    def fetch_content(self):
-        # global response
+    @staticmethod
+    def request_is_ok_or_not(response, date):
+        if response.status_code == 200:
+            print(date, '请求成功')
+        else:
+            print(date, '请求失败')
+
+    @staticmethod
+    def write_to_file(raw, file_name):
+        with open(file_name, 'w') as f:
+            f.write(str(raw))
+
+    def fetch_trading_lists(self):
         s = requests.session()
         s.headers.update({"User-Agent": self.User_Agent, 'Content-Type': self.Content_Type})
         requests.utils.add_dict_to_cookiejar(s.cookies, cookie_dict=self.cookies)
 
         data = {}
+        sum_url = []
         for date in self.transaction_date_list:
             self.form_data['transactionDate'] = date
             response = s.post(config.url4, data=self.form_data)   # 将参数放在字典中,当做参数传递
+            response.encoding = 'utf-8'
             data[date] = response.text
-            if response.status_code == 200:
-                print(date, '请求成功')
-            else:
-                print(date, '请求失败')
-
+            self.request_is_ok_or_not(response=response, date=date)
         # params_url = config.url4 + '?' + config.requests_data   # 将参数放在 url 中,只是介绍查询参数的请求方式，这里就不循环查了
         # response = s.post(params_url)
+        self.write_to_file(data, 'data.py')
+        self.write_to_file(sum_url, 'sum_url.py')
 
-        with open('data.py', 'w') as f:  # 将抓取的数据写入文件保存
-            f.write(str(data))
-
-        print('爬取的数据已写入 data.py 文件')
+    @staticmethod
+    def get_all_url(response_text):
+        soup = BeautifulSoup(response_text, 'lxml')
+        url = {}
+        i = 1
+        for link in soup.find_all('a'):
+            print(link)
+            url[i] = link
+            i += 1
+        return url
+        # return soup.find_all('a')
 
     def analysis(self):
         with open('data.py', 'r') as f:
@@ -145,9 +164,9 @@ class Spider:
         print('成功写入 excel')
 
     def go(self):
-        self.fetch_content()    # 抓取文件，数据写入文件
-        self.analysis()         # 从文件读取数据，处理数据，并将处理好的数据存放在 self.data 属性中
-        self.write_excel()      # 将 self.data 中的数据写入 excel
+        self.fetch_trading_lists()    # 抓取文件，数据写入文件
+        # self.analysis()         # 从文件读取数据，处理数据，并将处理好的数据存放在 self.data 属性中
+        # self.write_excel()      # 将 self.data 中的数据写入 excel
 
 
 spider = Spider()
