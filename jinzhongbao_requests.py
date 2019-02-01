@@ -4,19 +4,18 @@
 # @Author: PythonVampire
 # @email : vampire@ivamp.cn
 # @File  : jinzhongbao_requests.py
-import datetime
 import json
 import os
 
 import requests
 import xlwt
-from http.cookies import SimpleCookie
 
 from bs4 import BeautifulSoup
 from xlrd import open_workbook
 from xlutils.copy import copy
 
 import config
+from libs import cookie_to_dict, form_to_dict, request_is_ok_or_not, write_to_file, transform_time, set_style
 
 
 class Spider:
@@ -24,79 +23,13 @@ class Spider:
     def __init__(self):
         self.User_Agent = config.User_Agent
         self.language = config.language
-        self.form_data = self.form_to_dict(config.requests_data)
-        self.cookies = self.cookie_to_dict(config.requests_cookies)
+        self.form_data = form_to_dict(config.requests_data)
+        self.cookies = cookie_to_dict(config.requests_cookies)
         self.Content_Type = config.Content_Type
         self.start_year = config.start_year
         self.end_year = config.end_year
         self.transaction_date_list = config.transaction_date_list
         self.data = []
-
-    @staticmethod
-    def transform_time(time_str):
-        new_time = datetime.datetime.strptime(time_str, "%Y%m%d%H%M%S")
-        new_time = str(new_time)
-        return new_time
-
-    @staticmethod
-    def cookie_to_dict(raw):
-        cookie = SimpleCookie(raw)
-        dict_cookies = {i.key: i.value for i in cookie.values()}
-        return dict_cookies
-
-    @staticmethod
-    def dict_to_json(raw):
-        json_cookies = json.dumps(raw)
-        return json_cookies
-
-    @staticmethod
-    def form_to_dict(raw):
-        tmp_list = raw.split('&')
-        tmp_dict = {}
-
-        for i in tmp_list:
-            tmp = i.split('=')
-            tmp_dict[tmp[0]] = tmp[1]
-
-        return tmp_dict
-
-    @staticmethod
-    def set_style(name, height, bold=False):  # 设置表格样式
-        style = xlwt.XFStyle()
-        font = xlwt.Font()
-        font.name = name
-        font.bold = bold
-        font.color_index = 4
-        font.height = height
-        style.font = font
-        return style
-
-    def transaction_date(self):
-        transaction_date_list = []
-        year = list(range(self.start_year, self.end_year + 1))
-        month = list(range(1, 13))
-
-        for x in range(0, len(year)):
-            for y in range(0, len(month)):
-                str_year = str(year[x])  # 将数字年转为字符串
-                str_month = str(month[y])  # 将数字月转为字符串
-                str_month = '0' + str_month if len(str_month) == 1 else str_month  # 单位数月份前面加 '0'
-                transaction_date = int(str_year + str_month)
-                transaction_date_list.append(transaction_date)
-
-        return transaction_date_list
-
-    @staticmethod
-    def request_is_ok_or_not(response, date):
-        if response.status_code == 200:
-            print(date, '请求成功')
-        else:
-            print(date, '请求失败')
-
-    @staticmethod
-    def write_to_file(raw, file_name):
-        with open(file_name, 'w') as f:
-            f.write(str(raw))
 
     def fetch_trading_lists(self):
         s = requests.session()
@@ -110,11 +43,11 @@ class Spider:
             response = s.post(config.url4, data=self.form_data)   # 将参数放在字典中,当做参数传递
             response.encoding = 'utf-8'
             data[date] = response.text
-            self.request_is_ok_or_not(response=response, date=date)
+            request_is_ok_or_not(response=response, date=date)
         # params_url = config.url4 + '?' + config.requests_data   # 将参数放在 url 中,只是介绍查询参数的请求方式，这里就不循环查了
         # response = s.post(params_url)
-        self.write_to_file(data, 'data.py')
-        self.write_to_file(sum_url, 'sum_url.py')
+        write_to_file(data, 'data.py')
+        write_to_file(sum_url, 'sum_url.py')
 
     @staticmethod
     def get_all_url(response_text):
@@ -138,7 +71,7 @@ class Spider:
             month_trading_record = json.loads(dict_data[i])  # 取出月交易记录
             month_trading_record.reverse()  # 月交易记录本来是倒序排序，转化为正序
             for item in month_trading_record:
-                item['TRTM'] = self.transform_time(item['TRTM'])  # 将记录里的时间转化为正常时间
+                item['TRTM'] = transform_time(item['TRTM'])  # 将记录里的时间转化为正常时间
                 record = list(item.values())  # 将月交易记录字典的值转化为列表
                 self.data.append(record)
 
@@ -149,7 +82,7 @@ class Spider:
             title_list = ['时间', '商户名称', '终端序列号', '交易状态', '旧商户名', '结算金额',
                           '结算状态', 'THUUID', '交易手续费', 'RN', '交易金额', '卡号']  # 设置表格头
             for i in range(0, len(title_list)):
-                sheet1.write(0, i, title_list[i], self.set_style('Times New Roman', 220, True))
+                sheet1.write(0, i, title_list[i], set_style('Times New Roman', 220, True))
             book.save('trading_record.xls')
 
         read_book = open_workbook('trading_record.xls', on_demand=True)  # 用wlrd提供的方法读取一个excel文件
@@ -158,7 +91,7 @@ class Spider:
         sheet1 = write_book.get_sheet(0)    # xlwt 对象的 sheet1 具有 write 权限方便后面写入数据
         for row in range(0, len(self.data)):
             for column in range(0, len(self.data[row])):
-                sheet1.write(base_rows + row, column, self.data[row][column], self.set_style('Times New Roman', 220, True))
+                sheet1.write(base_rows + row, column, self.data[row][column], set_style('Times New Roman', 220, True))
         write_book.save('trading_record.xls')
 
         print('成功写入 excel')
