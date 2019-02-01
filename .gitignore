@@ -119,3 +119,4 @@ config.py
 data.py
 trading_record.xls
 .idea
+sum_url.py
