@@ -1,0 +1,15 @@
+beautifulsoup4==4.7.1
+bs4==0.0.1
+certifi==2018.11.29
+chardet==3.0.4
+idna==2.8
+lxml==4.3.0
+PySocks==1.6.8
+-e git://github.com/brokenseal/PyV8-OS-X@c91d6c54aea729161567c1229b12c66f62474513#egg=PyV8
+requests==2.21.0
+selenium==3.141.0
+soupsieve==1.7.3
+urllib3==1.24.1
+xlrd==1.2.0
+xlutils==2.0.0
+xlwt==1.3.0
