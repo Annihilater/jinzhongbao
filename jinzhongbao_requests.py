@@ -16,6 +16,7 @@ from copy import deepcopy
 
 import config
 from libs import cookie_to_dict, form_to_dict, request_is_ok_or_not, write_to_file, transform_time
+from libs.generate_encode_url_by_js_escape import generate_encode_url_by_js_escape
 from libs.generate_trade_url import generate_trade_url
 from libs.save_img import save_img
 from libs.set_excel_style import set_style
@@ -73,6 +74,7 @@ class Spider:
         with open('data.py', 'r') as f:
             str_data = f.read()
 
+        # eval 函数将字符串 str 当成有效的表达式来求值并返回计算结果
         dict_data = eval(str_data)  # 将读取出的字符串数据转化为字典，字典的键为月份，字典的值为当月交易记录，值为标准的 json 对象
 
         for month in dict_data:
@@ -81,7 +83,9 @@ class Spider:
 
             for item in month_trading_record:  # item 是每条交易记录字典
                 tmp_item = deepcopy(item)
-                url = generate_trade_url(item)  # 获取记录详情页面 url
+
+                url = generate_encode_url_by_js_escape(item)  # 使用 js escape 函数编码交易记录，生成交易记录详情页面的 url
+                # url = generate_trade_url(item)  # 使用 Python 内部的方法拼接编码交易记录，获取交易记录详情页面 url，很繁琐
                 self.trade_detail_url.append(url)
 
                 url_dict = {}
