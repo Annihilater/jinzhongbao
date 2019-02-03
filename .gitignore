@@ -122,5 +122,4 @@ receipt
 # 文件
 config.py
 data.py
-sum_url.py
 trade_record.xls
