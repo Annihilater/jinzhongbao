@@ -8,8 +8,6 @@ import datetime
 import json
 from http.cookies import SimpleCookie
 
-import xlwt
-
 
 def transform_time(time_str):
     new_time = datetime.datetime.strptime(time_str, "%Y%m%d%H%M%S")
@@ -39,17 +37,6 @@ def form_to_dict(raw):
     return tmp_dict
 
 
-def set_style(name, height, bold=False):  # 设置表格样式
-    style = xlwt.XFStyle()
-    font = xlwt.Font()
-    font.name = name
-    font.bold = bold
-    font.color_index = 4
-    font.height = height
-    style.font = font
-    return style
-
-
 def request_is_ok_or_not(response, date):
     if response.status_code == 200:
         print(date, '请求成功')
@@ -76,11 +63,3 @@ def transaction_date(start_year, end_year):
             transaction_date_list.append(transaction_date_num)
 
     return transaction_date_list
-
-
-
-
-
-
-
-
