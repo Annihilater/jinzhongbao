@@ -123,4 +123,4 @@ receipt
 config.py
 data.py
 sum_url.py
-trading_record.xls
+trade_record.xls
