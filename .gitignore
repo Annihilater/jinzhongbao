@@ -117,7 +117,7 @@ dmypy.json
 
 # 文件夹
 .idea
-img
+receipt
 
 # 文件
 config.py
