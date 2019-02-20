@@ -137,5 +137,6 @@ class Spider:
                 j += 1
 
 
-spider = Spider()
-spider.go()
+if __name__ == '__main__':
+    spider = Spider()
+    spider.go()
