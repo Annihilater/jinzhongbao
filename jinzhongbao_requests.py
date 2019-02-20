@@ -84,8 +84,8 @@ class Spider:
             for item in month_trading_record:  # item 是每条交易记录字典
                 tmp_item = deepcopy(item)
 
-                url = generate_encode_url_by_js_escape(item)  # 使用 js escape 函数编码交易记录，生成交易记录详情页面的 url
-                # url = generate_trade_url(item)  # 使用 Python 内部的方法拼接编码交易记录，获取交易记录详情页面 url，很繁琐
+                # url = generate_encode_url_by_js_escape(item)  # 使用 js escape 函数编码交易记录，生成交易记录详情页面的 url
+                url = generate_trade_url(item)  # 使用 Python 内部的方法拼接编码交易记录，获取交易记录详情页面 url，很繁琐
                 self.trade_detail_url.append(url)
 
                 url_dict = {}
