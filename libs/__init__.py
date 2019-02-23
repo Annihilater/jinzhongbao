@@ -63,3 +63,7 @@ def transaction_date(start_year, end_year):
             transaction_date_list.append(transaction_date_num)
 
     return transaction_date_list
+
+
+def get_word(dic_t):
+    return dic_t['word']
