@@ -4,5 +4,9 @@
 # @Author: PythonVampire
 # @email : vampire@ivamp.cn
 # @File  : test_json.py
+import json
 
-
+my_dict = {'img': 'hjaksdgbasjkbdnasjkn'}
+my_json = json.dumps(my_dict)
+print(type(my_json))
+print(my_json)
