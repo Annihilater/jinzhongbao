@@ -115,12 +115,13 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# 文件夹
-.idea
-receipt
+/.idea
+/receipt/
 
-# 文件
-config.py
-data.py
-trade_record.xls
-content.html
+/aliyun_ocr.txt
+/trade_record.xls
+/test/content.html
+/config.py
+/test/aliyun_ocr_text
+/data.py
+
