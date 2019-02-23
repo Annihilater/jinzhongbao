@@ -125,3 +125,4 @@ dmypy.json
 /test/aliyun_ocr_text
 /data.py
 
+/test/dict_test.py
