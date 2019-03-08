@@ -8,9 +8,9 @@
 
 import time
 from selenium import webdriver
-from config import chromedriver_path
+from config import CHROMEDRIVER_PATH
 
-driver = webdriver.Chrome(chromedriver_path)
+driver = webdriver.Chrome(CHROMEDRIVER_PATH)
 # Optional argument, if not specified will search path.
 
 driver.get('http://www.google.com/xhtml')
