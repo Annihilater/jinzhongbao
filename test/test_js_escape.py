@@ -6,14 +6,12 @@
 # @File  : test_js_escape.py
 import execjs
 
-import config
-
-test_trade_data = config.trade_data
+from config import trade_data, TRADE_URL_PREFIX
 
 
-def generate_encode_url_by_js_escape(trade_data):
-    data = str(trade_data)
-    trade_url_prefix = config.trade_url_prefix
+def generate_encode_url_by_js_escape(raw):
+    data = str(raw)
+    trade_url_prefix = TRADE_URL_PREFIX
 
     ctx = execjs.compile("""
         function encode_trade_data(data){
@@ -26,5 +24,7 @@ def generate_encode_url_by_js_escape(trade_data):
     return encode_url
 
 
-my_encode_url = generate_encode_url_by_js_escape(test_trade_data)
-print(my_encode_url)
+if __name__ == '__main__':
+    test_trade_data = trade_data
+    my_encode_url = generate_encode_url_by_js_escape(test_trade_data)
+    print(my_encode_url)
