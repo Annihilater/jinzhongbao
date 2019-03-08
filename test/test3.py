@@ -6,13 +6,13 @@
 # @File  : test3.py
 import unittest
 from selenium import webdriver
-from config import chromedriver_path
+from config import CHROMEDRIVER_PATH
 
 
 class GoogleTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.browser = webdriver.Chrome(chromedriver_path)
+        self.browser = webdriver.Chrome(CHROMEDRIVER_PATH)
         self.addCleanup(self.browser.quit)
 
     def testPageTitle(self):
