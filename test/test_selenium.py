@@ -7,9 +7,9 @@
 from selenium import webdriver
 import time
 
-from config import chromedriver_path
+from config import CHROMEDRIVER_PATH
 
-browser = webdriver.Chrome(chromedriver_path)
+browser = webdriver.Chrome(CHROMEDRIVER_PATH)
 
 browser.get("http://www.baidu.com")
 browser.find_element_by_id("kw").send_keys("selenium")
