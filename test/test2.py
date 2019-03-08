@@ -10,9 +10,9 @@ import time
 
 from selenium import webdriver
 import selenium.webdriver.chrome.service as service
-from config import chromedriver_path
+from config import CHROMEDRIVER_PATH
 
-service = service.Service(chromedriver_path)
+service = service.Service(CHROMEDRIVER_PATH)
 service.start()
 capabilities = {'chrome.binary': '/path/to/custom/chrome'}
 driver = webdriver.Remote(service.service_url, capabilities)
