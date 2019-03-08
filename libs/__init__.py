@@ -67,3 +67,25 @@ def transaction_date(start_year, end_year):
 
 def get_word(dic_t):
     return dic_t['word']
+
+
+def get_current_month():
+    date = datetime.datetime.now().date()
+    date = str(date)
+    month = date.replace('-', '')[:-2]  # 除去日期
+    return month
+
+
+def get_months_list(begin, end):
+    start_date = datetime.datetime.strptime(str(begin), '%Y%m')
+    end_date = datetime.datetime.strptime(str(end), '%Y%m')
+    dates = []
+    dt = start_date  # dt 为日期类型
+    while dt <= end_date:
+        dt = int(datetime.datetime.strftime(dt, '%Y%m'))  # 将 dt 由日期类型转换为字符串类型，再转换为数字类型
+        dates.append(dt)
+        dt = datetime.datetime.strptime(str(dt), '%Y%m')  # 将 dt 由数字类型转换为字符串类型, 再转换为日期类型
+        dt = dt + datetime.timedelta(days=31)  # dt 增加一个月的时间间隔
+
+    dates.append(int(datetime.datetime.strftime(end_date, '%Y%m')))
+    return dates
