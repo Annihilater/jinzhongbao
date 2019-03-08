@@ -116,13 +116,8 @@ dmypy.json
 .pyre/
 
 /.idea
-/receipt/
 
-/aliyun_ocr.txt
-/trade_record.xls
-/test/content.html
 /config.py
-/test/aliyun_ocr_text
-/data.py
-
-/test/dict_test.py
+/secure.py
+/data/
+/script/
