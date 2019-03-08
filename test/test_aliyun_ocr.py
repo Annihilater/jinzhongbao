@@ -10,7 +10,7 @@ import base64
 
 from config import image_file, Authorization, aliyun_ocr_api_url
 from libs import get_word
-from libs.ocr_post import post_url
+from libs.aliyun_ocr_api import post_url
 
 
 def ocr_extract_data():
