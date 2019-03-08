@@ -16,7 +16,7 @@ def generate_encode_url_by_js_escape(trade_data):
     :return:
     """
     data = str(trade_data)
-    trade_url_prefix = config.trade_url_prefix
+    trade_url_prefix = config.TRADE_URL_PREFIX
 
     ctx = execjs.compile("""
         function encode_trade_data(data){
