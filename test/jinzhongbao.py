@@ -12,21 +12,22 @@ import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-import config
+from config import URL, FAKE_URL, USER_AGENT, LANGUAGE, CHROMEDRIVER_PATH, root_pattern, merchant_order_name_pattern, \
+    amount_pattern, COOKIES
 
 
 class Spider:
     def __init__(self):
-        self.url = config.url
-        self.fake_url = config.fake_url
-        self.User_Agent = config.User_Agent
-        self.language = config.language
-        self.cookies = config.cookies
-        self.chrome_driver = config.chromedriver_path
+        self.url = URL
+        self.fake_url = FAKE_URL
+        self.User_Agent = USER_AGENT
+        self.language = LANGUAGE
+        self.cookies = COOKIES
+        self.chrome_driver = CHROMEDRIVER_PATH
 
-        self.root_pattern = config.root_pattern
-        self.merchant_order_name_pattern = config.merchant_order_name_pattern
-        self.amount_pattern = config.amount_pattern
+        self.root_pattern = root_pattern
+        self.merchant_order_name_pattern = merchant_order_name_pattern
+        self.amount_pattern = amount_pattern
 
         self.picture_url = []
         self.picture_single_url_dict = {}
