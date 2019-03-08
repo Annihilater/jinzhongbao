@@ -6,14 +6,16 @@
 # @File  : generate_trade_url.py
 import json
 import re
+from copy import deepcopy
 from urllib.parse import quote
 
 import config
 
 
-def generate_trade_url(record_dict):
+def generate_trade_url(item):
+    record_dict = deepcopy(item)
     # 生成交易记录详情页面的 url
-    trade_url_prefix = config.trade_url_prefix
+    trade_url_prefix = config.TRADE_URL_PREFIX
 
     def to_unicode(string):
         # 将中文转化为 unicode
@@ -77,5 +79,7 @@ def generate_trade_url(record_dict):
     return url
 
 
-# url = generate_trade_url(dict_trading_record)
-# print(url)
+if __name__ == '__main__':
+    dict_trading_record = {}
+    trade_detail_url = generate_trade_url(dict_trading_record)
+    print(trade_detail_url)
