@@ -13,4 +13,3 @@ from config import IMAGE_PATH
 image = Image.open(IMAGE_PATH)
 code = pytesseract.image_to_string(image, lang="chi_sim", config="psm 6")
 print(code)
-

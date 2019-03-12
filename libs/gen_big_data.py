@@ -62,9 +62,18 @@ def gen_big_data(path, acquirer_path, area_path):
             item['merc_seq_num'] = item['merc_num'][11:15]
             item['cmb_jf'] = 0
 
-            r = (item['create_time'], item['cmb_update_time'], item['merc_num'], item['merc_name'],
-                 item['acquirer_num'], item['acquirer_name'], item['mcc'], item['area_num'], item['area_name'],
-                 item['merc_seq_num'], item['cmb_jf'])
+            r = (
+                item['create_time'],
+                item['cmb_update_time'],
+                item['merc_num'],
+                item['merc_name'],
+                item['acquirer_num'],
+                item['acquirer_name'],
+                item['mcc'],
+                item['area_num'],
+                item['area_name'],
+                item['merc_seq_num'],
+                item['cmb_jf'])
             data.append(r)
 
         except Exception as e:

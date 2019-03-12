@@ -26,18 +26,26 @@ def which_bank(c):
 
 
 def change():
-    for i in [1]:
+    """
+    更新 trade 表的 bank 字段
+    :return:
+    """
+    for i in [358, 364]:
         try:
             trade = db.session.query(Trade).get(ident=i)
         except Exception as e:
             break
-        card_no = generate_card(trade.CARDNO)
-        try:
-            bank = which_bank(card_no)
-        except Exception as e:
-            continue
-        with db.auto_commit():
-            db.session.query(Trade).filter_by(id=i).update({Trade.bank: bank})
+        if trade:
+            card_no = generate_card(trade.CARDNO)
+
+            try:
+                bank = which_bank(card_no)
+            except Exception as e:
+                continue
+
+            with db.auto_commit():
+                db.session.query(Trade).filter_by(
+                    id=i).update({Trade.bank: bank})
 
 
 def generate_card(card):  # 银行卡一般为16位，前6位为发卡行 BIN 号，这里加0是为了补全卡号发给阿里 api 识别发卡行

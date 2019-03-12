@@ -20,8 +20,10 @@ class HTTP:
     @classmethod
     def make_session(cls):
         session = requests.session()
-        session.headers.update({"User-Agent": cls.user_agent, 'Content-Type': cls.content_type})
-        requests.utils.add_dict_to_cookiejar(session.cookies, cookie_dict=cls.cookies)
+        session.headers.update(
+            {"User-Agent": cls.user_agent, 'Content-Type': cls.content_type})
+        requests.utils.add_dict_to_cookiejar(
+            session.cookies, cookie_dict=cls.cookies)
         return session
 
     @staticmethod

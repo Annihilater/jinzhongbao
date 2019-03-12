@@ -11,4 +11,3 @@ time_str = '20190102111747'
 time = datetime.datetime.strptime(time_str, "%Y%m%d%H%M%S")
 time = str(time)
 print(time)
-

@@ -58,7 +58,8 @@ def transaction_date(start_year, end_year):
         for y in range(0, len(month)):
             str_year = str(year[x])  # 将数字年转为字符串
             str_month = str(month[y])  # 将数字月转为字符串
-            str_month = '0' + str_month if len(str_month) == 1 else str_month  # 单位数月份前面加 '0'
+            str_month = '0' + \
+                str_month if len(str_month) == 1 else str_month  # 单位数月份前面加 '0'
             transaction_date_num = int(str_year + str_month)
             transaction_date_list.append(transaction_date_num)
 
@@ -82,9 +83,11 @@ def get_months_list(begin, end):
     dates = []
     dt = start_date  # dt 为日期类型
     while dt <= end_date:
-        dt = int(datetime.datetime.strftime(dt, '%Y%m'))  # 将 dt 由日期类型转换为字符串类型，再转换为数字类型
+        # 将 dt 由日期类型转换为字符串类型，再转换为数字类型
+        dt = int(datetime.datetime.strftime(dt, '%Y%m'))
         dates.append(dt)
-        dt = datetime.datetime.strptime(str(dt), '%Y%m')  # 将 dt 由数字类型转换为字符串类型, 再转换为日期类型
+        dt = datetime.datetime.strptime(
+            str(dt), '%Y%m')  # 将 dt 由数字类型转换为字符串类型, 再转换为日期类型
         dt = dt + datetime.timedelta(days=31)  # dt 增加一个月的时间间隔
 
     dates.append(int(datetime.datetime.strftime(end_date, '%Y%m')))

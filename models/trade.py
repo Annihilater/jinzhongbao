@@ -24,7 +24,9 @@ class Trade(Base):
     merc_num = Column(String(20))
     TRADE_AMOUNT = Column('trade_amount', Integer())
     AMOUNT = Column('amount', FLOAT(precision=10, scale=2), default=0.00)
-    RECEIPT_AMOUNT_FEE = Column('receipt_amount_fee', FLOAT(precision=10, scale=2), default=0.00)
+    RECEIPT_AMOUNT_FEE = Column(
+        'receipt_amount_fee', FLOAT(
+            precision=10, scale=2), default=0.00)
     JSSTATUS = Column('js_status', String(20))
     bank = Column(String(20))
     CARDNO = Column('card_no', String(30))

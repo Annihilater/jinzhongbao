@@ -17,9 +17,12 @@ def save_img(img_url, file_name, file_path='img'):
 
         tmp_path = file_path + '/' + file_name
         if not os.path.exists(tmp_path):
-            file_suffix = os.path.splitext(img_url)[1]  # 获得图片后缀，splitext 可以将文件与扩展名分开
-            filename = '{}{}{}{}'.format(file_path, os.sep, file_name, file_suffix)  # 拼接图片名（包含路径）
-            urllib.request.urlretrieve(img_url, filename=filename)  # 下载图片，并保存到文件夹中
+            # 获得图片后缀，splitext 可以将文件与扩展名分开
+            file_suffix = os.path.splitext(img_url)[1]
+            filename = '{}{}{}{}'.format(
+                file_path, os.sep, file_name, file_suffix)  # 拼接图片名（包含路径）
+            urllib.request.urlretrieve(
+                img_url, filename=filename)  # 下载图片，并保存到文件夹中
             # print('小票下载成功')
         else:
             pass

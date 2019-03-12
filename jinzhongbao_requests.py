@@ -56,7 +56,8 @@ class Spider:
         self.form_data['transactionDate'] = month
         str_month = str(month)[4:6]
         str_year = str(month)[:4]
-        num = db.session.query(Trade).filter_by(year=str_year, month=str_month).count()
+        num = db.session.query(Trade).filter_by(
+            year=str_year, month=str_month).count()
 
         gen_timestamp = str(generate_timestamp())
         url = URL4.replace('毫秒级时间戳', gen_timestamp)
@@ -79,8 +80,10 @@ class Spider:
         将单条交易记录数据的字典写入MySQL
         :param item: 单条交易记录
         """
-        url = generate_trade_url(item)  # 使用 Python 内部的方法拼接编码交易记录，获取交易记录详情页面 url，很繁琐
-        single_picture_url = self.picture_url_prefix + item[self.THUUID]  # 获取单个小票的链接地址
+        url = generate_trade_url(
+            item)  # 使用 Python 内部的方法拼接编码交易记录，获取交易记录详情页面 url，很繁琐
+        single_picture_url = self.picture_url_prefix + \
+            item[self.THUUID]  # 获取单个小票的链接地址
 
         item['create_time'] = gen_current_time()
         item['update_time'] = gen_current_time()
@@ -91,7 +94,8 @@ class Spider:
         item['day'] = item['TRTM'][6:8]
 
         try:
-            if not db.session.query(Trade.TRTM).filter_by(TRTM=item['TRTM']).first():  # 查不到时，time = None
+            if not db.session.query(Trade.TRTM).filter_by(
+                    TRTM=item['TRTM']).first():  # 查不到时，time = None
                 with db.auto_commit():
                     db.session.add(Trade(**item))
                 print('写入成功 ok...')
@@ -102,7 +106,8 @@ class Spider:
 
     @staticmethod
     def down_all_pictures(path):
-        time_and_img_url_list = db.session.query(Trade.TRTM, Trade.receipt_url).all()
+        time_and_img_url_list = db.session.query(
+            Trade.TRTM, Trade.receipt_url).all()
         # i = 1
         for item in time_and_img_url_list:
             time = item[0]
@@ -116,8 +121,8 @@ class Spider:
 
 
 if __name__ == '__main__':
-    db.create_db_table()
-    spider = Spider()
-    spider.fetch_trade_data()
-    spider.down_all_pictures(path='data/receipt/')
+    # db.create_db_table()
+    # spider = Spider()
+    # spider.fetch_trade_data()
+    # spider.down_all_pictures(path='data/receipt/')
     change()

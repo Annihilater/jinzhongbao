@@ -13,7 +13,8 @@ def get_months_list(begin, end):
     dates = []
     dt = start_date  # dt 为日期类型
     while dt <= end_date:
-        dt = int(datetime.datetime.strftime(dt, '%Y%m'))  # 将 dt 由日期类型转换为字符串类型，再转换为数字类型
+        # 将 dt 由日期类型转换为字符串类型，再转换为数字类型
+        dt = int(datetime.datetime.strftime(dt, '%Y%m'))
         dates.append(dt)
         dt = str(dt)  # 将 dt 由数字类型转换为字符串类型
         dt = datetime.datetime.strptime(dt, '%Y%m')  # 将 dt 由字符串转换为日期类型

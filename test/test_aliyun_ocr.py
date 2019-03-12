@@ -46,7 +46,8 @@ def ocr_extract_data():
     single_receipt['银行卡号'] = get_word(ocr_data[18]).replace('/C', '')
     single_receipt['批次号'] = get_word(ocr_data[21])
     single_receipt['凭证号'] = get_word(ocr_data[22])
-    single_receipt['交易时间'] = get_word(ocr_data[25]).replace('/', '') + get_word(ocr_data[26]).replace('：', '')
+    single_receipt['交易时间'] = get_word(ocr_data[25]).replace(
+        '/', '') + get_word(ocr_data[26]).replace('：', '')
     single_receipt['检索参考号'] = get_word(ocr_data[29])
     single_receipt['授权码'] = get_word(ocr_data[30])
     single_receipt['金额'] = get_word(ocr_data[33])
