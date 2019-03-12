@@ -7,7 +7,7 @@
 # 判断当前目录下的问价内存不存在
 import os
 
-if os.path.exists('test5.py'):
-    print('存在')
+if os.path.exists("test5.py"):
+    print("存在")
 else:
-    print('不存在')
+    print("不存在")

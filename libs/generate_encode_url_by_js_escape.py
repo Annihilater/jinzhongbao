@@ -18,11 +18,13 @@ def generate_encode_url_by_js_escape(trade_data):
     data = str(trade_data)
     trade_url_prefix = config.TRADE_URL_PREFIX
 
-    ctx = execjs.compile("""
+    ctx = execjs.compile(
+        """
         function encode_trade_data(data){
             return escape(data)
         }
-    """)
+    """
+    )
 
     encode_url = ctx.call("encode_trade_data", data)
     encode_url = trade_url_prefix + encode_url

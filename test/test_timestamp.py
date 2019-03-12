@@ -14,6 +14,6 @@ def generate_timestamp():
     return t
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     timestamp = generate_timestamp()
     print(timestamp)

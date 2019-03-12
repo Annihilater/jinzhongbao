@@ -24,6 +24,7 @@ class DB:
         在数据库创建数据表，每个 model 都需要导入一遍才会被创建，否则未使用的表不会在数据库创建
         """
         from models import trade, merchant, black_list, point, acquirer, area
+
         Base.metadata.create_all(self.engine)
 
     @contextmanager
@@ -38,7 +39,7 @@ class DB:
 
 db = DB()
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     db.create_db_table()
     # with db.auto_commit():
     #     trade = Trade(id=1)

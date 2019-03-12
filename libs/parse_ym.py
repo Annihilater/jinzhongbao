@@ -14,7 +14,7 @@ def parse_ym(s):
     return datetime(int(year_s), int(mon_s), day_s)
 
 
-if __name__ == '__main__':
-    t = '201901'
+if __name__ == "__main__":
+    t = "201901"
     y_m = parse_ym(t)
     print(y_m)

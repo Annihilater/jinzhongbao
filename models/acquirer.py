@@ -10,7 +10,7 @@ from models.base import Base
 
 
 class Acquirer(Base):
-    __tablename__ = 'acquirer'
+    __tablename__ = "acquirer"
     id = Column(Integer, primary_key=True, autoincrement=True)
     create_time = Column(DateTime())
     update_time = Column(DateTime())

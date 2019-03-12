@@ -14,16 +14,7 @@ from secure import HOST, PORT, USER, PASSWORD
 
 
 class InsertBigData:
-    def __init__(
-            self,
-            host,
-            port,
-            username,
-            password,
-            db,
-            data,
-            sql,
-            charset='utf8'):
+    def __init__(self, host, port, username, password, db, data, sql, charset="utf8"):
         # pymysql连接mysql数据库,需要的参数host,port,user,password,db,charset
         self.conn = pymysql.connect(
             host=host,
@@ -31,7 +22,8 @@ class InsertBigData:
             user=username,
             password=password,
             db=db,
-            charset=charset)
+            charset=charset,
+        )
         self.cur = self.conn.cursor()  # 创建游标
         self.data = data  # 需要写入 MySQL 的数据，类型为元组的列表，单条记录是元组
         self.sql = sql  # 插入查询的 sql 语句
@@ -47,7 +39,7 @@ class InsertBigData:
         # 执行多行插入，executemany(sql语句,数据(需一个元组类型))
         content = self.cur.executemany(self.sql, data_list)
         if content:
-            print('成功插入第{}条数据'.format(n_max - 1))
+            print("成功插入第{}条数据".format(n_max - 1))
 
         self.conn.commit()  # 提交数据,必须提交，不然数据不会保存
 
@@ -62,31 +54,29 @@ class InsertBigData:
             number = math.ceil(length / max_line) * max_line
 
         # g_l 任务列表，定义了异步的函数: 这里用到了一个gevent.spawn方法
-        g_l = [gevent.spawn(self.insert, i, i + max_line, length)
-               for i in range(1, number, max_line)]
+        g_l = [
+            gevent.spawn(self.insert, i, i + max_line, length)
+            for i in range(1, number, max_line)
+        ]
 
         gevent.joinall(g_l)  # gevent.joinall 等待所以操作都执行完毕
         self.cur.close()  # 关闭游标
+
         self.conn.close()  # 关闭pymysql连接
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # 向 db20 表插入 300 万条测试数据
     big_data = []
     for i in range(1, 3000001):
-        result = (i, 'bob' + str(i), 'male', 'bob' + str(i) + '@qq.com')
+        result = (i, "bob" + str(i), "male", "bob" + str(i) + "@qq.com")
         big_data.append(result)
     # 定义sql语句,插入数据id,name,gender,email
-    sql_seq = 'insert into userinfo(id,name,gender,email) values (%s,%s,%s,%s)'
-    DATABASE = 'test'
+    sql_seq = "insert into userinfo(id,name,gender,email) values (%s,%s,%s,%s)"
+    DATABASE = "test"
 
     start_time = time.time()  # 计算程序开始时间
     insert_big_data = InsertBigData(
-        HOST,
-        PORT,
-        USER,
-        PASSWORD,
-        DATABASE,
-        big_data,
-        sql_seq)  # 实例化类，传入必要参数
-    print('程序耗时{:.2f}'.format(time.time() - start_time))  # 计算程序总耗时
+        HOST, PORT, USER, PASSWORD, DATABASE, big_data, sql_seq
+    )  # 实例化类，传入必要参数
+    print("程序耗时{:.2f}".format(time.time() - start_time))  # 计算程序总耗时

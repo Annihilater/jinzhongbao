@@ -19,7 +19,6 @@ from models.trade import Trade
 
 
 class Spider:
-
     def __init__(self):
         self.form_data = form_to_dict(REQUESTS_DATA)  # 抓包获得的请求查询参数
         self.begin_date = BEGIN_DATE
@@ -53,14 +52,13 @@ class Spider:
         如果数据库数据少，则将本次抓取的月交易数据写入数据库；
         否则不写入数据库。
         """
-        self.form_data['transactionDate'] = month
+        self.form_data["transactionDate"] = month
         str_month = str(month)[4:6]
         str_year = str(month)[:4]
-        num = db.session.query(Trade).filter_by(
-            year=str_year, month=str_month).count()
+        num = db.session.query(Trade).filter_by(year=str_year, month=str_month).count()
 
         gen_timestamp = str(generate_timestamp())
-        url = URL4.replace('毫秒级时间戳', gen_timestamp)
+        url = URL4.replace("毫秒级时间戳", gen_timestamp)
         response = session.post(url, data=self.form_data)  # 将参数放在字典中,当做参数传递
         month_records = eval(response.text)
 
@@ -69,58 +67,56 @@ class Spider:
         if num < newest_num:
             for item in month_records:
                 self.single_record_save_to_mysql(item)
-            print(str(month) + ' 交易数据已成功写入数据库')
+            print(str(month) + " 交易数据已成功写入数据库")
         elif num == newest_num:
-            print(str(month) + ' 交易数据已存在，不写入数据库')
+            print(str(month) + " 交易数据已存在，不写入数据库")
         else:
-            print(str(month) + ' 数据库以保存的记录竟然比金中保服务器的数据还多？哪里出错了吧？')
+            print(str(month) + " 数据库以保存的记录竟然比金中保服务器的数据还多？哪里出错了吧？")
 
     def single_record_save_to_mysql(self, item):
         """
         将单条交易记录数据的字典写入MySQL
         :param item: 单条交易记录
         """
-        url = generate_trade_url(
-            item)  # 使用 Python 内部的方法拼接编码交易记录，获取交易记录详情页面 url，很繁琐
-        single_picture_url = self.picture_url_prefix + \
-            item[self.THUUID]  # 获取单个小票的链接地址
+        url = generate_trade_url(item)  # 使用 Python 内部的方法拼接编码交易记录，获取交易记录详情页面 url，很繁琐
+        single_picture_url = self.picture_url_prefix + item[self.THUUID]  # 获取单个小票的链接地址
 
-        item['create_time'] = gen_current_time()
-        item['update_time'] = gen_current_time()
-        item['trade_detail_url'] = url
-        item['receipt_url'] = single_picture_url
-        item['year'] = item['TRTM'][:4]
-        item['month'] = item['TRTM'][4:6]
-        item['day'] = item['TRTM'][6:8]
+        item["create_time"] = gen_current_time()
+        item["update_time"] = gen_current_time()
+        item["trade_detail_url"] = url
+        item["receipt_url"] = single_picture_url
+        item["year"] = item["TRTM"][:4]
+        item["month"] = item["TRTM"][4:6]
+        item["day"] = item["TRTM"][6:8]
 
         try:
-            if not db.session.query(Trade.TRTM).filter_by(
-                    TRTM=item['TRTM']).first():  # 查不到时，time = None
+            if (
+                not db.session.query(Trade.TRTM).filter_by(TRTM=item["TRTM"]).first()
+            ):  # 查不到时，time = None
                 with db.auto_commit():
                     db.session.add(Trade(**item))
-                print('写入成功 ok...')
+                print("写入成功 ok...")
             else:
-                print(item['TRTM'], '数据已存在，不写入数据')
+                print(item["TRTM"], "数据已存在，不写入数据")
         except Exception as e:
             print(item)
 
     @staticmethod
     def down_all_pictures(path):
-        time_and_img_url_list = db.session.query(
-            Trade.TRTM, Trade.receipt_url).all()
+        time_and_img_url_list = db.session.query(Trade.TRTM, Trade.receipt_url).all()
         # i = 1
         for item in time_and_img_url_list:
             time = item[0]
             month = time[:6]
             img_url = item[1]
-            picture_name = time + '.png'  # 设置小票图片名称
+            picture_name = time + ".png"  # 设置小票图片名称
             file_path = path + month  # 设定文件夹路径为 receipt + 月份
             save_img(img_url, picture_name, file_path)  # 按月分文件夹保存小票
             # print(i, month, time)
             # i += 1
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # db.create_db_table()
     # spider = Spider()
     # spider.fetch_trade_data()

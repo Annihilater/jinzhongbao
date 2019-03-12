@@ -12,7 +12,7 @@ def gen_current_time():
     return now
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     t = gen_current_time()
     year = t.year
     month = t.month

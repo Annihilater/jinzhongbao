@@ -5,10 +5,10 @@
 # @email : vampire@ivamp.cn
 # @File  : test10.py
 
-s = '测试美容院'
-s_unicode = u'测试美容院'
-s_gb2312 = s.encode('gb2312')
-s_uft_8 = s.encode('utf-8')
+s = "测试美容院"
+s_unicode = u"测试美容院"
+s_gb2312 = s.encode("gb2312")
+s_uft_8 = s.encode("utf-8")
 print(type(s))
 print(s)
 

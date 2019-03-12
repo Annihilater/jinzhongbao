@@ -6,7 +6,7 @@
 # @File  : test_path.py
 import os
 
-path = os.path.abspath('20180803110954')
+path = os.path.abspath("20180803110954")
 path1 = os.path.dirname(__file__)
 
 print(path)

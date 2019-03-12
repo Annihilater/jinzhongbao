@@ -14,7 +14,7 @@ import time
 # 调用阿里云 ocr 服务发送 post 请求
 def post_url(url, img_dict, headers):
     try:
-        params = json.dumps(img_dict).encode(encoding='UTF8')
+        params = json.dumps(img_dict).encode(encoding="UTF8")
         req = urllib.request.Request(url, params, headers)
         r = urllib.request.urlopen(req)
         html = r.read()

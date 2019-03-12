@@ -10,7 +10,7 @@ from models.base import Base
 
 
 class Point(Base):
-    __tablename__ = 'point'
+    __tablename__ = "point"
     id = Column(Integer, primary_key=True, autoincrement=True)
     create_time = Column(DateTime())
     update_time = Column(DateTime())

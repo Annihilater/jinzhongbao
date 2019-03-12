@@ -19,9 +19,11 @@ def generate_begin_date():
     """
     max_id = db.session.query(func.max(Trade.id)).scalar()
     if max_id:
-        y, m, d = db.session.query(
-            Trade.year, Trade.month, Trade.day).filter_by(
-            id=max_id).first()
+        y, m, d = (
+            db.session.query(Trade.year, Trade.month, Trade.day)
+            .filter_by(id=max_id)
+            .first()
+        )
         begin_date = y + m
     else:
         begin_date = BEGIN_DATE

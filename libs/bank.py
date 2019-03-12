@@ -13,16 +13,18 @@ from models.trade import Trade
 
 
 def which_bank(c):
-    base_url = 'https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?' \
-               '_input_charset=utf-8&cardNo=银行卡卡号&cardBinCheck=true'
-    url = base_url.replace('银行卡卡号', c)
+    base_url = (
+        "https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?"
+        "_input_charset=utf-8&cardNo=银行卡卡号&cardBinCheck=true"
+    )
+    url = base_url.replace("银行卡卡号", c)
 
     response = requests.post(url)
     d = json.loads(response.text)
-    if d['validated'] is False and c[:6] == JD_QUICK_PASS_BIN:
-        print(c, d['messages'])
-        d['bank'] = '京东闪付虚拟卡'
-    return d['bank']
+    if d["validated"] is False and c[:6] == JD_QUICK_PASS_BIN:
+        print(c, d["messages"])
+        d["bank"] = "京东闪付虚拟卡"
+    return d["bank"]
 
 
 def change():
@@ -44,14 +46,13 @@ def change():
                 continue
 
             with db.auto_commit():
-                db.session.query(Trade).filter_by(
-                    id=i).update({Trade.bank: bank})
+                db.session.query(Trade).filter_by(id=i).update({Trade.bank: bank})
 
 
 def generate_card(card):  # 银行卡一般为16位，前6位为发卡行 BIN 号，这里加0是为了补全卡号发给阿里 api 识别发卡行
-    c = card[:6] + '0000000000'
+    c = card[:6] + "0000000000"
     return c
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     change()

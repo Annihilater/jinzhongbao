@@ -5,6 +5,6 @@
 # @email : vampire@ivamp.cn
 # @File  : test_dict_keys.py
 
-d = {'a': 1}
+d = {"a": 1}
 key = list(d.keys())[0]
 print(key)

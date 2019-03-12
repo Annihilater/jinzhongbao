@@ -7,9 +7,9 @@
 
 
 def to_unicode(string):
-    ret = ''
+    ret = ""
     for v in string:
-        ret = ret + hex(ord(v)).upper().replace('0X', '\\u')
+        ret = ret + hex(ord(v)).upper().replace("0X", "\\u")
 
     return ret
 

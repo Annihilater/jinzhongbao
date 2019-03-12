@@ -14,8 +14,8 @@ from config import CHROMEDRIVER_PATH
 
 service = service.Service(CHROMEDRIVER_PATH)
 service.start()
-capabilities = {'chrome.binary': '/path/to/custom/chrome'}
+capabilities = {"chrome.binary": "/path/to/custom/chrome"}
 driver = webdriver.Remote(service.service_url, capabilities)
-driver.get('http://www.google.com/xhtml')
+driver.get("http://www.google.com/xhtml")
 time.sleep(5)  # Let the user actually see something!
 driver.quit()

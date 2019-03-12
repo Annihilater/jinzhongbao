@@ -10,7 +10,7 @@ from models.base import Base
 
 
 class Area(Base):
-    __tablename__ = 'area'
+    __tablename__ = "area"
     id = Column(Integer, primary_key=True, autoincrement=True)
     create_time = Column(DateTime())
     update_time = Column(DateTime())

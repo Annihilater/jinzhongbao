@@ -6,7 +6,7 @@
 # @File  : test11.py
 import datetime
 
-text = '201901'
-y = datetime.datetime.strptime(text, '%Y%m')
+text = "201901"
+y = datetime.datetime.strptime(text, "%Y%m")
 print(y)
 print(type(y))

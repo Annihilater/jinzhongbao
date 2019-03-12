@@ -10,7 +10,7 @@ from models.base import Base
 
 
 class BlackList(Base):
-    __tablename__ = 'cmb_black_list'
+    __tablename__ = "cmb_black_list"
     id = Column(Integer, primary_key=True, autoincrement=True)
     create_time = Column(DateTime())
     update_time = Column(DateTime())

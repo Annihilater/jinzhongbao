@@ -12,8 +12,17 @@ import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-from config import URL, FAKE_URL, USER_AGENT, LANGUAGE, CHROMEDRIVER_PATH, root_pattern, merchant_order_name_pattern, \
-    amount_pattern, COOKIES
+from config import (
+    URL,
+    FAKE_URL,
+    USER_AGENT,
+    LANGUAGE,
+    CHROMEDRIVER_PATH,
+    root_pattern,
+    merchant_order_name_pattern,
+    amount_pattern,
+    COOKIES,
+)
 
 
 class Spider:
@@ -51,7 +60,7 @@ class Spider:
         # print(new_user_agent)
         # print(new_language)
         driver.get(self.fake_url)
-        print('current_url:', driver.current_url)
+        print("current_url:", driver.current_url)
 
         for cookie in self.cookies:
             driver.add_cookie(cookie_dict=cookie)
@@ -60,12 +69,15 @@ class Spider:
             for i in range(2, 12):
                 driver.get(self.url)
 
-                trade_time_xpath = '//*[@id="container"]/div/div[2]/div[3]/div[' + str(
-                    i) + ']/div/a/div/p[5]'
-                trade_detail_xpath = '//*[@id="container"]/div/div[2]/div[3]/div[' + str(
-                    i) + ']/div'
-                trade_time = driver.find_element_by_xpath(
-                    trade_time_xpath).text
+                trade_time_xpath = (
+                    '//*[@id="container"]/div/div[2]/div[3]/div['
+                    + str(i)
+                    + "]/div/a/div/p[5]"
+                )
+                trade_detail_xpath = (
+                    '//*[@id="container"]/div/div[2]/div[3]/div[' + str(i) + "]/div"
+                )
+                trade_time = driver.find_element_by_xpath(trade_time_xpath).text
                 driver.find_element_by_xpath(trade_detail_xpath).click()
                 # time.sleep(1)
                 driver.implicitly_wait(1)

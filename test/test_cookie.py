@@ -11,9 +11,9 @@ import requests
 from requests.cookies import RequestsCookieJar
 
 jar = RequestsCookieJar()
-jar.set('tasty_cookie', 'yum', domain='httpbin.org', path='/cookies')
-jar.set('gross_cookie', 'blech', domain='httpbin.org', path='/elsewhere')
-url = 'http://httpbin.org/cookies'
+jar.set("tasty_cookie", "yum", domain="httpbin.org", path="/cookies")
+jar.set("gross_cookie", "blech", domain="httpbin.org", path="/elsewhere")
+url = "http://httpbin.org/cookies"
 r = requests.get(url, cookies=jar)
 print(r.text)
 print(r.status_code)

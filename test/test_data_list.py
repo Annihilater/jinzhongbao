@@ -8,6 +8,6 @@
 data_list = []
 for i in range(1, 10001):
     # 添加所有任务到总的任务列表
-    result = (i, 'zhangsan' + str(i), 'male', 'zhangsan' + str(i) + '@qq.com')
+    result = (i, "zhangsan" + str(i), "male", "zhangsan" + str(i) + "@qq.com")
     data_list.append(result)
 print(data_list)

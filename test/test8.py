@@ -11,7 +11,7 @@ from config import encode_str, dict_record
 
 json_record = json.dumps(dict_record).upper()
 print(json_record)
-encode_record = quote(json_record.encode('gb2312'))
-encode_record = encode_record.replace('%20', '')
+encode_record = quote(json_record.encode("gb2312"))
+encode_record = encode_record.replace("%20", "")
 print(encode_str)
 print(encode_record)

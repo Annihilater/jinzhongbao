@@ -18,6 +18,6 @@ print(new_encode_str)
 
 
 if new_encode_str == encode_str:
-    print('=')
+    print("=")
 else:
-    print('!=')
+    print("!=")

@@ -6,5 +6,5 @@
 # @File  : test_execjs.py
 import execjs
 
-print(execjs.eval('new Date'))
-print(execjs.eval('Date.now()'))
+print(execjs.eval("new Date"))
+print(execjs.eval("Date.now()"))

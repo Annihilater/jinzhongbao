@@ -10,10 +10,10 @@ import datetime
 def get_month():
     date = datetime.datetime.now().date()
     date = str(date)
-    month = date.replace('-', '')[:-2]  # 除去日期
+    month = date.replace("-", "")[:-2]  # 除去日期
     return month
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     m = get_month()
     print(m)

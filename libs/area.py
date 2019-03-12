@@ -12,33 +12,33 @@ from models.area import Area
 
 def get_area_data(path):
     data = []
-    with open(path, 'r') as f:
+    with open(path, "r") as f:
         lines = f.readlines()
 
-    province_name = ''
+    province_name = ""
     for line in lines:
         d = dict()
-        r = line.split('\t')
+        r = line.split("\t")
         if len(r) == 1:
-            province_name = r[0].replace('\n', '')
+            province_name = r[0].replace("\n", "")
             continue
         try:
             area_num = r[0]
-            area_name = r[1].replace('\n', '')
+            area_name = r[1].replace("\n", "")
 
-            d['create_time'] = gen_current_time()
-            d['update_time'] = gen_current_time()
-            d['area_code'] = area_num
-            d['province_name'] = province_name
-            d['area_name'] = area_name
+            d["create_time"] = gen_current_time()
+            d["update_time"] = gen_current_time()
+            d["area_code"] = area_num
+            d["province_name"] = province_name
+            d["area_name"] = area_name
             data.append(d)
         except Exception as e:
-            print('哪里出问题了？')
+            print("哪里出问题了？")
             print(e)
     return data
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     db.create_db_table()
     area_path = AREA_PATH
     my_data = get_area_data(area_path)

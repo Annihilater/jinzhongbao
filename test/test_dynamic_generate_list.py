@@ -11,7 +11,7 @@
 #     locals()['v' + str(i)] = i
 month = 201808
 
-str_month = 'month'
+str_month = "month"
 a = globals()[str_month]
 
 L = list(str_month)

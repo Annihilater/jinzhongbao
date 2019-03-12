@@ -12,12 +12,12 @@ cookies = config.requests_cookies
 
 
 def cookie_to_json(raw):
-    tmp_list = raw.split(';')
+    tmp_list = raw.split(";")
     tmp_dict = {}
 
     for i in tmp_list:
         i = i[1:]
-        tmp = i.split('=')
+        tmp = i.split("=")
         tmp_dict[tmp[0]] = tmp[1]
 
     json_cookies = json.dumps(tmp_dict)

@@ -6,7 +6,14 @@
 # @File  : httper.py
 import requests
 
-from config import USER_AGENT, CONTENT_TYPE, REQUESTS_COOKIES, LANGUAGE, COOKIE, HTTP_HEADERS
+from config import (
+    USER_AGENT,
+    CONTENT_TYPE,
+    REQUESTS_COOKIES,
+    LANGUAGE,
+    COOKIE,
+    HTTP_HEADERS,
+)
 from libs import cookie_to_dict
 
 
@@ -21,9 +28,9 @@ class HTTP:
     def make_session(cls):
         session = requests.session()
         session.headers.update(
-            {"User-Agent": cls.user_agent, 'Content-Type': cls.content_type})
-        requests.utils.add_dict_to_cookiejar(
-            session.cookies, cookie_dict=cls.cookies)
+            {"User-Agent": cls.user_agent, "Content-Type": cls.content_type}
+        )
+        requests.utils.add_dict_to_cookiejar(session.cookies, cookie_dict=cls.cookies)
         return session
 
     @staticmethod
@@ -34,6 +41,6 @@ class HTTP:
         return session
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     http = HTTP()
     http.make_session2()
