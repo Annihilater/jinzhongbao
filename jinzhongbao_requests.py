@@ -25,6 +25,7 @@ class Spider:
         self.TRTM = TRTM  # 字符串 'TRTM'
         self.THUUID = THUUID  # 字符串 'THUUID'
         self.picture_url_prefix = PICTURE_URL_PREFIX  # 小票图片链接的前缀
+        self.img_path = "data/receipt/"
 
     def go(self):
         self.fetch_trade_data()  # 抓取文件，数据写入 MySQL
@@ -101,8 +102,7 @@ class Spider:
         except Exception as e:
             print(item)
 
-    @staticmethod
-    def down_all_pictures(path):
+    def down_all_pictures(self):
         time_and_img_url_list = db.session.query(Trade.TRTM, Trade.receipt_url).all()
         # i = 1
         for item in time_and_img_url_list:
@@ -110,7 +110,7 @@ class Spider:
             month = time[:6]
             img_url = item[1]
             picture_name = time + ".png"  # 设置小票图片名称
-            file_path = path + month  # 设定文件夹路径为 receipt + 月份
+            file_path = self.img_path + month  # 设定文件夹路径为 receipt + 月份
             save_img(img_url, picture_name, file_path)  # 按月分文件夹保存小票
             # print(i, month, time)
             # i += 1
@@ -120,5 +120,5 @@ if __name__ == "__main__":
     # db.create_db_table()
     # spider = Spider()
     # spider.fetch_trade_data()
-    # spider.down_all_pictures(path='data/receipt/')
+    # spider.down_all_pictures()
     change()
