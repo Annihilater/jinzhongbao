@@ -79,7 +79,12 @@ class Spider:
         将单条交易记录数据的字典写入MySQL
         :param item: 单条交易记录
         """
-        url = generate_trade_url(item)  # 使用 Python 内部的方法拼接编码交易记录，获取交易记录详情页面 url，很繁琐
+        # 使用 Python 内部的方法拼接编码交易记录，获取交易记录详情页面 url，执行效率高
+        url = generate_trade_url(item)
+
+        # Python 内部调用 JavaScript 的方式获得交易详情页 url，效率低
+        # url = generate_encode_url_by_js_escape(item)
+
         single_picture_url = self.picture_url_prefix + item[self.THUUID]  # 获取单个小票的链接地址
 
         item["create_time"] = gen_current_time()
