@@ -6,6 +6,7 @@
 # @File  : generate_trade_url.py
 import json
 import re
+import time
 from copy import deepcopy
 from urllib.parse import quote
 
@@ -13,6 +14,11 @@ import config
 
 
 def generate_trade_url(item):
+    """
+    :param item:单条交易记录字典
+    :return:单个小票的链接地址
+    """
+    # t0 = time.time()
     record_dict = deepcopy(item)
     # 生成交易记录详情页面的 url
     trade_url_prefix = config.TRADE_URL_PREFIX
@@ -83,6 +89,7 @@ def generate_trade_url(item):
     #     print('!=')
 
     url = trade_url_prefix + encode_trading_record
+    # print(time.time() - t0)
     return url
 
 

@@ -4,6 +4,8 @@
 # @Author: PythonVampire
 # @email : vampire@ivamp.cn
 # @File  : generate_encode_url_by_js_escape.py
+import time
+
 import execjs
 
 import config
@@ -15,6 +17,7 @@ def generate_encode_url_by_js_escape(trade_data):
     :param trade_data:
     :return:
     """
+    # t0 = time.time()
     data = str(trade_data)
     trade_url_prefix = config.TRADE_URL_PREFIX
 
@@ -28,4 +31,5 @@ def generate_encode_url_by_js_escape(trade_data):
 
     encode_url = ctx.call("encode_trade_data", data)
     encode_url = trade_url_prefix + encode_url
+    # print(time.time() - t0)
     return encode_url
