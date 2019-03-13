@@ -68,8 +68,8 @@ class InsertBigData:
 if __name__ == "__main__":
     # 向 db20 表插入 300 万条测试数据
     big_data = []
-    for i in range(1, 3000001):
-        result = (i, "bob" + str(i), "male", "bob" + str(i) + "@qq.com")
+    for j in range(1, 3000001):
+        result = (j, "bob" + str(j), "male", "bob" + str(j) + "@qq.com")
         big_data.append(result)
     # 定义sql语句,插入数据id,name,gender,email
     sql_seq = "insert into userinfo(id,name,gender,email) values (%s,%s,%s,%s)"
