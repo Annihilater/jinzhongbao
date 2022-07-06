@@ -6,7 +6,7 @@ cymysql==0.9.13
 gevent==1.4.0
 greenlet==0.4.15
 idna==2.8
-lxml==4.3.0
+lxml==4.9.1
 Pillow==5.4.1
 PyExecJS==1.5.1
 PyMySQL==0.9.3
